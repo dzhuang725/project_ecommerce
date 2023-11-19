@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Register</title>
+    <!-- Link to CSS here if you have -->
+  </head>
+  <body>
+    <h2>Register</h2>
+    <form action="/register" method="post">
+      <input type="text" name="name" placeholder="Username" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <input
+        type="password"
+        name="confirm"
+        placeholder="Re-enter password"
+        required
+      />
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="/login">Login</a></p>
+  </body>
+</html>
