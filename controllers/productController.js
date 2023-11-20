@@ -2,8 +2,9 @@ const Product = require("../models/Product");
 const User = require("../models/User");
 
 const getProducts = async (req, res) => {
-  const perPage = 9; // Number of products per page
-  const page = parseInt(req.query.page) || 1; // Current page
+  // Number of products per page
+  const perPage = 9;
+  const page = parseInt(req.query.page) || 1; // Number of products per page
 
   const brandFilter = req.query.brand
     ? { brand: { $in: req.query.brand } }

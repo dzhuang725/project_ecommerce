@@ -13,7 +13,7 @@ const adminAuthenticated = (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = decoded; // Add the decoded user to the request object
       req.adminAuthenticated = true;
-      next(); // Proceed to the next middleware or route handler
+      next();
     }
   } catch (error) {
     console.log(error);

@@ -7,9 +7,6 @@ const addFavorite = async (req, res, next) => {
       const error = new Error("Please login first");
       error.status = "401 Unauthorized";
       throw error;
-      // return res
-      //   .status(401)
-      //   .render("error", { message: "401 Unauthorized Please login first " });
     }
     const productId = req.body.productId;
     const userId = req.user.userId;
@@ -21,7 +18,8 @@ const addFavorite = async (req, res, next) => {
     await User.findByIdAndUpdate(userId, {
       $addToSet: { favorites: productId },
     });
-    res.redirect("back"); // Redirect back to the page where the request was made
+    // Redirect back to the page where the request was made
+    res.redirect("back");
   } catch (error) {
     const status = error.status || 500;
     error.status = status;

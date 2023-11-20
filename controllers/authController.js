@@ -56,7 +56,9 @@ const loginUser = async (req, res) => {
     // Find user by email
     const user = await User.findOne({ email: email });
     if (!user) {
-      return res.status(400).send("User not found");
+      const error = new Error("User not found");
+      error.status = "400 Bad Request";
+      throw error;
     }
 
     // Check password
