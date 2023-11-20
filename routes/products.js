@@ -5,6 +5,11 @@ const favoritesController = require("../controllers/favoritesController");
 const isAuthenticated = require("../middleware/isAuthenticated");
 
 router.get("/", isAuthenticated, productController.getProducts);
+router.get(
+  "/products/details/:productId",
+  isAuthenticated,
+  productController.getProductDetails
+);
 router.get("/products*", isAuthenticated, productController.getProducts);
 
 router.post(
