@@ -8,7 +8,9 @@ const getProducts = async (req, res) => {
   const brandFilter = req.query.brand
     ? { brand: { $in: req.query.brand } }
     : {};
-  const typeFilter = req.query.type ? { type: { $in: req.query.type } } : {};
+  const typeFilter = req.query.type
+    ? { category: { $in: req.query.type } }
+    : {};
 
   try {
     const products = await Product.find({ ...brandFilter, ...typeFilter })
@@ -19,11 +21,7 @@ const getProducts = async (req, res) => {
       ...brandFilter,
       ...typeFilter,
     });
-    if (count === 0) {
-      return res.render("noProductsFound", {
-        userWithFavorites: userWithFavorites,
-      }); // Render a view for no products found
-    }
+
     // Get favorite list
     var userWithFavorites = [];
     if (req.isAuthenticated) {
@@ -32,6 +30,13 @@ const getProducts = async (req, res) => {
         .exec();
     }
 
+    // Render a view for no products found
+    if (count === 0) {
+      return res.render("noProductsFound", {
+        isLoggedIn: req.isAuthenticated,
+        userWithFavorites: userWithFavorites,
+      });
+    }
     res.render("home", {
       title: "Ecommerce app",
       isLoggedIn: req.isAuthenticated,
@@ -47,4 +52,22 @@ const getProducts = async (req, res) => {
   }
 };
 
-module.exports = { getProducts };
+const getProductDetails = async (req, res) => {
+  const productId = req.params.productId;
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).render("productNotFound"); // Render a 'product not found' view
+    }
+
+    res.render("productDetails", { product: product }); // Render a view with the product details
+  } catch (error) {
+    if (error.kind === "ObjectId") {
+      return res.status(404).render("productNotFound");
+    }
+    res.status(500).send("Server error");
+  }
+};
+
+module.exports = { getProducts, getProductDetails };
