@@ -19,14 +19,17 @@ const getProducts = async (req, res) => {
       ...brandFilter,
       ...typeFilter,
     });
-    const userWithFavorites = await User.findById(req.user.userId)
-      .populate("favorites") // Populate the favorites array with product data
-      .exec();
-
     if (count === 0) {
       return res.render("noProductsFound", {
         userWithFavorites: userWithFavorites,
       }); // Render a view for no products found
+    }
+    // Get favorite list
+    var userWithFavorites = [];
+    if (req.isAuthenticated) {
+      userWithFavorites = await User.findById(req.user.userId)
+        .populate("favorites") // Populate the favorites array with product data
+        .exec();
     }
 
     res.render("home", {

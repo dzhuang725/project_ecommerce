@@ -21,7 +21,7 @@ const addFavorite = async (req, res) => {
 
 const removeFavorite = async (req, res) => {
   const productId = req.params.productId;
-  const userId = req.user._id;
+  const userId = req.user.userId;
 
   try {
     await User.findByIdAndUpdate(userId, { $pull: { favorites: productId } });

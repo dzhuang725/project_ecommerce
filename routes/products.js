@@ -6,7 +6,6 @@ const isAuthenticated = require("../middleware/isAuthenticated");
 
 router.get("/", isAuthenticated, productController.getProducts);
 router.get("/products*", isAuthenticated, productController.getProducts);
-router.get("/favorites", isAuthenticated, favoritesController.getFavorites);
 
 router.post(
   "/favorites/add/:productId",
@@ -14,7 +13,7 @@ router.post(
   favoritesController.addFavorite
 );
 
-router.delete(
+router.post(
   "/favorites/remove/:productId",
   isAuthenticated,
   favoritesController.removeFavorite
