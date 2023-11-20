@@ -1,11 +1,4 @@
-<html>
-  <head>
-    <title>Product Gallery</title>
-    <link rel="stylesheet" href="/css/productGallery.css" />
-  </head>
-  <body>
-    <div class="container">
-      <div class="product-gallery">
+<div class="product-gallery">
         {{#each products}}
           <div class="product">
             <img src="{{this.imageUrl}}" alt="{{this.name}}" />
@@ -28,7 +21,4 @@
           <button disabled>Next</button>
         {{/if}}
       </div>
-    </div>
-
-  </body>
-</html>
+</div>

@@ -1,8 +1,5 @@
 const Product = require("../models/Product");
 
-const productsView = (req, res) => {
-  res.render("productGallery", {});
-};
 const getProducts = async (req, res) => {
   const perPage = 9; // Number of products per page
   const page = parseInt(req.query.page) || 1; // Current page
@@ -13,13 +10,22 @@ const getProducts = async (req, res) => {
       .limit(perPage);
     const count = await Product.countDocuments(); // Total number of products
 
-    res.render("productGallery", {
+    res.render("home", {
+      title: "Ecommerce app",
+      isLoggedIn: req.isAuthenticated,
       products: products,
       currentPage: parseInt(page),
       totalPages: Math.ceil(count / perPage),
       hasNextPage: perPage * page < count,
       hasPrevPage: page > 1,
     });
+    // res.render("productGallery", {
+    //   products: products,
+    //   currentPage: parseInt(page),
+    //   totalPages: Math.ceil(count / perPage),
+    //   hasNextPage: perPage * page < count,
+    //   hasPrevPage: page > 1,
+    // });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

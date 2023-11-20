@@ -1,9 +1,21 @@
+<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
-  <body>
-    {{{body}}}
-  </body>
+    <!-- Include your CSS files here -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        {{> navigation}} <!-- Include the navigation bar partial -->
+    </header>
+
+    <main>
+        {{{body}}} <!-- Page-specific content will go here -->
+    </main>
+
+    <footer>
+        <!-- Footer content here -->
+    </footer>
+</body>
 </html>
