@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { passwordStrength } = require("check-password-strength");
 
 //For Register Page
 const registerView = (req, res) => {
@@ -13,17 +14,26 @@ const loginView = (req, res) => {
 
 const registerUser = async (req, res) => {
   try {
-    // TODO: Check inputs before send request
     const { name, email, location, password, confirm } = req.body;
-    if (password !== confirm) {
-      return res.render("error", {
-        message: "Password doesnot match confirm",
-      });
-    }
     // Check if the user already existes
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
       const error = new Error("Email already in use");
+      error.status = "400 Bad Request";
+      throw error;
+    }
+    // Check inputs before send request
+    if (password !== confirm) {
+      const error = new Error("Password doesnot match confirm");
+      error.status = "400 Bad Request";
+      throw error;
+    }
+    // Check password strength
+    if (
+      passwordStrength(password) != "Medium" ||
+      passwordStrength(password) != "Strong"
+    ) {
+      const error = new Error("Password is too weak");
       error.status = "400 Bad Request";
       throw error;
     }
