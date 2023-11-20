@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const productController = require("../controllers/productController");
-const favoritesController = require("../controllers/favouritesController");
+const favoritesController = require("../controllers/favoritesController");
 const isAuthenticated = require("../middleware/isAuthenticated");
 
 router.get("/", isAuthenticated, productController.getProducts);

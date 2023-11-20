@@ -31,14 +31,4 @@ const removeFavorite = async (req, res) => {
   }
 };
 
-const getFavorites = async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id).populate("favorites");
-    res.json(user.favorites);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error fetching favorites");
-  }
-};
-
-module.exports = { addFavorite, removeFavorite, getFavorites };
+module.exports = { addFavorite, removeFavorite };

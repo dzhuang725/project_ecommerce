@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const User = require("../models/User");
 
 const getProducts = async (req, res) => {
   const perPage = 9; // Number of products per page
@@ -18,9 +19,14 @@ const getProducts = async (req, res) => {
       ...brandFilter,
       ...typeFilter,
     });
+    const userWithFavorites = await User.findById(req.user.userId)
+      .populate("favorites") // Populate the favorites array with product data
+      .exec();
 
     if (count === 0) {
-      return res.render("noProductsFound"); // Render a view for no products found
+      return res.render("noProductsFound", {
+        userWithFavorites: userWithFavorites,
+      }); // Render a view for no products found
     }
 
     res.render("home", {
@@ -31,6 +37,7 @@ const getProducts = async (req, res) => {
       totalPages: Math.ceil(count / perPage),
       hasNextPage: perPage * page < count,
       hasPrevPage: page > 1,
+      userWithFavorites: userWithFavorites,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

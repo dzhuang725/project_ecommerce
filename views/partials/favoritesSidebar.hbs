@@ -1,7 +1,7 @@
 <aside class="favorites-sidebar">
-  {{#if user.favorites}}
+  {{#if userWithFavorites.favorites}}
     <ul>
-      {{#each user.favorites}}
+      {{#each userWithFavorites.favorites}}
         <li>
           {{this.name}}
           <form action="/favorites/remove/{{this._id}}" method="post">
