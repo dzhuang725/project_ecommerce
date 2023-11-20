@@ -61,7 +61,25 @@ const getProductDetails = async (req, res) => {
       return res.status(404).render("productNotFound"); // Render a 'product not found' view
     }
 
-    res.render("productDetails", { product: product }); // Render a view with the product details
+    // Fetch products from the same brand
+    const relatedProducts = await Product.find({
+      brand: product.brand,
+      _id: { $ne: productId },
+    }).limit(5);
+
+    var userWithFavorites = [];
+    if (req.isAuthenticated) {
+      userWithFavorites = await User.findById(req.user.userId)
+        .populate("favorites") // Populate the favorites array with product data
+        .exec();
+    }
+
+    res.render("productDetails", {
+      isLoggedIn: req.isAuthenticated,
+      product: product,
+      relatedProducts: relatedProducts,
+      userWithFavorites: userWithFavorites,
+    }); // Render a view with the product details
   } catch (error) {
     if (error.kind === "ObjectId") {
       return res.status(404).render("productNotFound");

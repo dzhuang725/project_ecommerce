@@ -1,4 +1,21 @@
 <article class="product-details">
   <h2>{{product.name}}</h2>
   <img src="{{product.imageUrl}}" alt="{{product.name}}" />
+  <p>${{product.price}}</p>
+  <form action="/favorites/add/:productId" method="post">
+    <input type="hidden" name="productId" value="{{product._id}}" />
+    <button type="submit">Add to Favorites</button>
+  </form>
+
+  <h3>Related Products</h3>
+  <div class="related-products">
+    {{#each relatedProducts}}
+      <div class="related-product-item">
+        <a href="/products/details/{{this._id}}">
+          <img src="{{this.imageUrl}}" alt="{{this.name}}" />
+          <h3>{{this.name}}</h3>
+        </a>
+      </div>
+    {{/each}}
+  </div>
 </article>
