@@ -1,0 +1,16 @@
+<aside class="favorites-sidebar">
+  {{#if user.favorites}}
+    <ul>
+      {{#each user.favorites}}
+        <li>
+          {{this.name}}
+          <form action="/favorites/remove/{{this._id}}" method="post">
+            <button type="submit">Remove</button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>No favorites added.</p>
+  {{/if}}
+</aside>

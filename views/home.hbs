@@ -33,7 +33,12 @@
       <img src="{{this.imageUrl}}" alt="{{this.name}}" />
       <h3>{{this.name}}</h3>
       <p>${{this.price}}</p>
+      <form action="/favorites/add/:productId" method="post">
+        <input type="hidden" name="productId" value="{{this._id}}" />
+        <button type="submit">Add to Favorites</button>
+      </form>
     </div>
+
   {{/each}}
 </div>
 
