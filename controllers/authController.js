@@ -42,7 +42,8 @@ const registerUser = async (req, res) => {
     });
 
     await user.save();
-    res.status(201).send("User created succefully");
+    res.redirect("/login");
+    // res.status(201).send("User created succefully");
   } catch (error) {
     console.log(error);
     res.status(500).send("Error registering new user");
