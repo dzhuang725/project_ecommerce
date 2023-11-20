@@ -50,6 +50,7 @@ nav li a:hover {
   padding: 20px; /* Optional: Padding around the entire grid */
   max-width: 1200px; /* Optional: Max width of the grid */
   margin: auto; /* Optional: Center the grid horizontally */
+  margin-right: 300px;
 }
 
 .product-item {

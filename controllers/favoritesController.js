@@ -3,11 +3,11 @@ const Product = require("../models/Product");
 
 const addFavorite = async (req, res, next) => {
   try {
-    if (!req.isLoggedin) {
-      const error = new Error("Please login first");
-      error.status = "401 Unauthorized";
-      throw error;
-    }
+    // if (!req.isLoggedin) {
+    //   const error = new Error("Please login first");
+    //   error.status = "401 Unauthorized";
+    //   throw error;
+    // }
     const productId = req.body.productId;
     const userId = req.user.userId;
     const product = await Product.findById(productId);
