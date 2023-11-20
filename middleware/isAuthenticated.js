@@ -11,9 +11,9 @@ const isAuthenticated = (req, res, next) => {
     } else {
       // Verify the token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = decoded; // Add the decoded user to the request object
+      req.user = decoded;
       req.isAuthenticated = true;
-      next(); // Proceed to the next middleware or route handler
+      next();
     }
   } catch (error) {
     console.log(error);
