@@ -1,0 +1,20 @@
+<h1>Admin Dashboard</h1>
+<nav>
+  <li><a href="/logout">Logout</a></li>
+</nav>
+<div class="users">
+  {{#each users}}
+    <div class="user">
+      <h2>User: {{this.username}}</h2>
+      <p>Email: {{this.email}}</p>
+      <div class="favorites">
+        <h3>Favorites:</h3>
+        <ul>
+          {{#each this.favorites}}
+            <li>{{this.name}} - {{this.description}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  {{/each}}
+</div>

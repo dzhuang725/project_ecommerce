@@ -10,6 +10,7 @@ var homeRouter = require("./routes/index");
 var loginRouter = require("./routes/login");
 var logoutRouter = require("./routes/logout");
 var productRouter = require("./routes/products");
+var adminRouter = require("./routes/admin");
 
 // Database
 const database = process.env.MONGO_URI;
@@ -41,6 +42,7 @@ app.use(cookieParser());
 app.use("/", loginRouter);
 app.use("/", logoutRouter);
 app.use("/", productRouter);
+app.use("/", adminRouter);
 app.use(express.static(__dirname + "/public"));
 
 module.exports = app;
