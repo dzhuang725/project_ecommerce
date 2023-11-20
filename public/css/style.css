@@ -79,3 +79,42 @@ nav li a:hover {
     grid-template-columns: 1fr; /* One column on small screens */
   }
 }
+
+/* Favorite sidebar */
+.favorites-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: #f8f8f8;
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.favorites-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.favorites-sidebar li {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.favorites-sidebar img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.favorites-sidebar button {
+  margin-left: auto;
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
