@@ -1,0 +1,23 @@
+<div class="product-gallery">
+  {{#each products}}
+    <div class="product">
+      <img src="{{this.imageUrl}}" alt="{{this.name}}" />
+      <h3>{{this.name}}</h3>
+      <p>${{this.price}}</p>
+    </div>
+  {{/each}}
+</div>
+
+<div class="pagination">
+  {{#if hasPrevPage}}
+    <a href="/products?page={{decrement currentPage}}">Previous</a>
+  {{else}}
+    <button disabled>Previous</button>
+  {{/if}}
+
+  {{#if hasNextPage}}
+    <a href="/products?page={{increment currentPage}}">Next</a>
+  {{else}}
+    <button disabled>Next</button>
+  {{/if}}
+</div>

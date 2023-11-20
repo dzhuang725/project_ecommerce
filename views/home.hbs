@@ -27,7 +27,8 @@
 
   <button type="submit">Apply Filters</button>
 </form>
-<div class="product-gallery">
+{{> productGallery}}
+{{!-- <div class="product-gallery">
   {{#each products}}
     <div class="product">
       <img src="{{this.imageUrl}}" alt="{{this.name}}" />
@@ -54,4 +55,4 @@
   {{else}}
     <button disabled>Next</button>
   {{/if}}
-</div>
+</div> --}}
