@@ -1,10 +1,18 @@
 const User = require("../models/User");
 const Product = require("../models/Product");
 
-const addFavorite = async (req, res) => {
-  const productId = req.body.productId;
-  const userId = req.user.userId; // Assumed to be available via authentication middleware
+const addFavorite = async (req, res, next) => {
   try {
+    if (!req.isLoggedin) {
+      const error = new Error("Please login first");
+      error.status = "401 Unauthorized";
+      throw error;
+      // return res
+      //   .status(401)
+      //   .render("error", { message: "401 Unauthorized Please login first " });
+    }
+    const productId = req.body.productId;
+    const userId = req.user.userId;
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).send("Product not found");
@@ -15,7 +23,9 @@ const addFavorite = async (req, res) => {
     });
     res.redirect("back"); // Redirect back to the page where the request was made
   } catch (error) {
-    res.status(500).send("Error adding to favorites");
+    const status = error.status || 500;
+    error.status = status;
+    res.render("error", { message: error.message, error: error });
   }
 };
 

@@ -15,19 +15,17 @@ const registerUser = async (req, res) => {
   try {
     // TODO: Check inputs before send request
     const { name, email, location, password, confirm } = req.body;
-    if (!name || !email || !password || !confirm) {
-      console.log("Fill empty fields");
-      return res.render("register", {
-        name,
-        email,
-        password,
-        confirm,
+    if (password !== confirm) {
+      return res.render("error", {
+        message: "Password doesnot match confirm",
       });
     }
     // Check if the user already existes
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
-      return res.status(400).send("Email alrealy in use");
+      const error = new Error("Email already in use");
+      error.status = "400 Bad Request";
+      throw error;
     }
 
     // Hash password
@@ -45,8 +43,9 @@ const registerUser = async (req, res) => {
     res.redirect("/login");
     // res.status(201).send("User created succefully");
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Error registering new user");
+    const status = error.status || 500;
+    error.status = status;
+    res.render("error", { message: error.message, error: error });
   }
 };
 
@@ -54,13 +53,6 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     // TODO: Check email and password before send request
-    // if (!email || !password) {
-    //   console.log("Please fill in all the fields");
-    //   return res.render("login", {
-    //     email,
-    //     password,
-    //   });
-    // }
     // Find user by email
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -70,7 +62,9 @@ const loginUser = async (req, res) => {
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).send("Invalid credentials");
+      const error = new Error("Invalid credentials");
+      error.status = "400 Bad Request";
+      throw error;
     }
 
     // User authenticated
@@ -83,10 +77,10 @@ const loginUser = async (req, res) => {
 
     res.cookie("token", token, { httpOnly: true, maxAge: 3600000 });
     res.redirect("/");
-    // res.status(200).send("User logged in successfully");
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Error logging in user");
+    const status = error.status || 500;
+    error.status = status;
+    res.render("error", { message: error.message, error: error });
   }
 };
 

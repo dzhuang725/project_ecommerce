@@ -46,5 +46,10 @@ app.use("/", productRouter);
 app.use("/", adminRouter);
 app.use(express.static(__dirname + "/public"));
 app.use("/", redirectRouter);
+app.use((error, req, res, next) => {
+  const status = error.status || 500;
+  const message = error.message || "Internal Server Error";
+  res.status(status).render("error", { error: message });
+});
 
 module.exports = app;
