@@ -10,6 +10,7 @@ const isAuthenticated = require("./middleware/isAuthenticated");
 var indexRouter = require("./routes/index");
 var loginRouter = require("./routes/login");
 var logoutRouter = require("./routes/logout");
+var productRouter = require("./routes/products");
 
 // Database
 const database = process.env.MONGO_URI;
@@ -19,6 +20,14 @@ mongoose
   .catch((err) => console.log(err));
 
 // View Engine
+// Registering helpers
+hbs.registerHelper("increment", function (value, options) {
+  return parseInt(value) + 1;
+});
+
+hbs.registerHelper("decrement", function (value, options) {
+  return parseInt(value) - 1;
+});
 app.set("view engine", "hbs");
 const partialsPath = path.join(__dirname, "/views/partials");
 hbs.registerPartials(partialsPath);
@@ -31,6 +40,8 @@ app.use(cookieParser());
 app.use("/", indexRouter);
 app.use("/", loginRouter);
 app.use("/logout", logoutRouter);
+app.use("/products", productRouter);
 // app.use("/*", )
+app.use(express.static(__dirname + "/public"));
 
 module.exports = app;
