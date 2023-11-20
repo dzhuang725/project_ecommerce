@@ -6,11 +6,12 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 const cookieParser = require("cookie-parser");
-var homeRouter = require("./routes/index");
+// var homeRouter = require("./routes/index");
 var loginRouter = require("./routes/login");
 var logoutRouter = require("./routes/logout");
 var productRouter = require("./routes/products");
 var adminRouter = require("./routes/admin");
+var redirectRouter = require("./routes/redirect");
 
 // Database
 const database = process.env.MONGO_URI;
@@ -44,5 +45,6 @@ app.use("/", logoutRouter);
 app.use("/", productRouter);
 app.use("/", adminRouter);
 app.use(express.static(__dirname + "/public"));
+app.use("/", redirectRouter);
 
 module.exports = app;
